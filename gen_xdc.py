@@ -15,7 +15,13 @@ def print_gen(file):
 keys = ['clocks', 'button', 'cpld', 'ext serial', 'usb',
         'ethernet', 'video', 'leds', 'num disp', 'switches',
         'flash', 'base ram', 'ext ram', 'default']
-fout = open('target.xdc', 'w')
+if len(sys.argv) == 2:
+    fname = sys.argv[1]
+    if not fname.endswith('.xdc'):
+        fname += '.xdc'
+else:
+    fname = 'target.xdc'
+fout = open(fname, 'w')
 
 print("""对于某一个section，直接回车来跳过，输入任意字符来进入
 对于section当中的变量，回车以跳过这个变量，输入则分为一下情况：
@@ -33,6 +39,7 @@ for num, varname_range, doc in zip(range(0, len(docs)), varname_ranges, docs):
         for k, v in varname_range.items():  # k: origin var name, v: range
             _ = friendly_names[k]
             _s = _ + ' ' + k if _ != k else k
+            # 打印端口名
             print(_s, end='')
             if v.stop != 1:
                 print('[{}:{}]'.format(v.start, v.stop-1), end='')
