@@ -34,28 +34,28 @@ print("""对于某一个section，直接回车来跳过，输入任意字符来�
    3. 输入"number: varname" 来对单个元素命名""")
 for num, varname_range, doc in zip(range(0, len(docs)), varname_ranges, docs):
     custom_varname = []
-    not_jump_sec = input('\nsection: ' + doc)
-    if not_jump_sec:
-        for k, v in varname_range.items():  # k: origin var name, v: range
+    not_skip_sec = input('\nsection: ' + doc)
+    if not_skip_sec:
+        for k, varrange in varname_range.items():  # k: origin var name, varrange: range
             _ = friendly_names[k]
             _s = _ + ' ' + k if _ != k else k
             # 打印端口名
             print(_s, end='')
-            if v.stop != 1:
-                print('[{}:{}]'.format(v.start, v.stop-1), end='')
+            if varrange.stop != 1:
+                print('[{}:{}]'.format(varrange.start, varrange.stop-1), end='')
 
             string = input(': ').strip().replace(' ', '')
             if string in ['y', 'yes']:
                 string = k
             elif not string:  # enter to accept current name
                 continue
-            if v.stop == 1:  # scalar port
+            if varrange.stop == 1:  # scalar port
                 custom_varname.append((k, string))
             else:
                 mappings = string.split(',')
                 range_re = re.compile('(?P<start>\d+)(-(?P<stop>\d+))?:(?P<varname>\w+)')
                 if len(mappings) == 1 and range_re.search(mappings[0]) == None:
-                    for i in v:
+                    for i in varrange:
                         custom_varname.append(('{}[{}]'.format(k, i), mappings[0] + '[{}]'.format(i)))
                 else:
                     for mapping in mappings:
@@ -66,7 +66,7 @@ for num, varname_range, doc in zip(range(0, len(docs)), varname_ranges, docs):
                         varname = res.group('varname')
                         if stop:
                             for i in range(start, stop+1):
-                                custom_varname.append(('{}[{}]'.format(k, i), varname+'[{}]'.format(i)))
+                                custom_varname.append(('{}[{}]'.format(k, i), varname+'[{}]'.format(i-start)))
                         else:
                             custom_varname.append(('{}[{}]'.format(k, start), varname))
     printf = print_gen(fout)
