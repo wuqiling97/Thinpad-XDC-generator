@@ -32,11 +32,12 @@ print("""对于某一个section，直接回车来跳过，输入任意字符来�
    1. 只输入变量名，把整个vector命名
    2. 输入"start-stop: varname" 来进行范围命名
    3. 输入"number: varname" 来对单个元素命名""")
-for num, varname_range, doc in zip(range(0, len(docs)), varname_ranges, docs):
+for num, varnamelist, varname_range, doc in zip(range(0, len(docs)), varnames, varname_ranges, docs):
     custom_varname = []
     not_skip_sec = input('\nsection: ' + doc)
     if not_skip_sec:
-        for k, varrange in varname_range.items():  # k: origin var name, varrange: range
+        for k in varnamelist:  # k: origin var name, varrange: range
+            varrange = varname_range[k]
             _ = friendly_names[k]
             _s = _ + ' ' + k if _ != k else k
             # 打印端口名

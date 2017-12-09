@@ -672,8 +672,8 @@ varnames = [
     ['leds'],
     ['dip_sw'],
     ['flash_a', 'flash_data', 'flash_byte_n', 'flash_ce_n', 'flash_oe_n', 'flash_rp_n', 'flash_vpen', 'flash_we_n'],
-    ['base_ram_addr', 'base_ram_be_n', 'base_ram_data', 'base_ram_ce_n', 'base_ram_oe_n', 'base_ram_we_n'],
-    ['ext_ram_addr', 'ext_ram_be_n', 'ext_ram_data', 'ext_ram_ce_n', 'ext_ram_oe_n', 'ext_ram_we_n'],
+    ['base_ram_ce_n', 'base_ram_oe_n', 'base_ram_we_n', 'base_ram_be_n', 'base_ram_addr', 'base_ram_data'],
+    ['ext_ram_ce_n', 'ext_ram_oe_n', 'ext_ram_we_n', 'ext_ram_be_n', 'ext_ram_addr', 'ext_ram_data'],
     []
 ]
 varname_ranges = [
